@@ -23,7 +23,13 @@ function createWindow() {
   });
 
   // ✅ Load built index.html from Vite
-  win.loadFile(path.join(__dirname, 'dist', 'index.html'));
+  // Auto switch between dev (Vite) and prod (built)
+  const isDev = !app.isPackaged;
+  if (isDev) {
+    win.loadURL('http://localhost:5173');
+  } else {
+    win.loadFile(path.join(__dirname, 'dist', 'index.html'));
+  }
 
   // Optional: Open DevTools
   win.webContents.openDevTools();
